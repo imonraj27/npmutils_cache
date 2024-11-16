@@ -1,0 +1,1 @@
+# A simple, lightweight library for InMemoryCaching in Node applications
