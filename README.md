@@ -1,14 +1,5 @@
 # Documentation
 
-<style>
-    div.box {
-        border: 1px solid #8889;
-        margin: 0 0 10px 0;
-        padding: 15px;
-        border-radius: 10px;
-    }
-</style>
-
 ---
 
 ## Getting Started
