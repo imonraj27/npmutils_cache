@@ -81,4 +81,8 @@ describe("InMemoryCache", () => {
 
         jest.useRealTimers();
     });
+
+    test("should not allow defaultTtl value = 0", () => {
+        expect(() => new InMemoryCache(0)).toThrowError(/.+/);
+    });
 });
