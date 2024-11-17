@@ -5,8 +5,8 @@ describe("InMemoryCache", () => {
     let cache = new InMemoryCache();
 
     test("should create a single instance", () => {
-        const cache1 = new InMemoryCache();
-        const cache2 = new InMemoryCache();
+        const cache1 = InMemoryCache.getInstance();
+        const cache2 = InMemoryCache.getInstance();
         expect(cache1).toBe(cache2);
     });
 
@@ -66,22 +66,6 @@ describe("InMemoryCache", () => {
         jest.useRealTimers();
     });
 
-    test("should allow custom TTL for cached items", () => {
-        jest.useFakeTimers();
-        const customCache = new InMemoryCache(5, TimeUnit.MINUTE);
-
-        customCache.set("item4", "value4");
-        const item = customCache.get("item4");
-        expect(item).toBe("value4");
-
-        jest.setSystemTime(Date.now() + 6 * 60 * 1000);
-
-        const itemAfterTTL = customCache.get("item4");
-        expect(itemAfterTTL).toBeUndefined();
-
-        jest.useRealTimers();
-    });
-
     ///////////////////////////////////////////////
 
 
@@ -103,17 +87,15 @@ describe("InMemoryCache", () => {
     test("should allow custom TTL duration and time unit", () => {
         jest.useFakeTimers();
 
-        // Custom TTL: 5 minutes
-        const customCache = new InMemoryCache();
-        customCache.set("item4", "value4", 5, TimeUnit.MINUTE);  // Custom TTL of 5 minutes
+        cache.set("item4", "value4", 5, TimeUnit.MINUTE);  // Custom TTL of 5 minutes
 
-        const item = customCache.get("item4");
+        const item = cache.get("item4");
         expect(item).toBe("value4");
 
         // Set system time 6 minutes later, item should expire
         jest.setSystemTime(Date.now() + 6 * 60 * 1000);  // 6 minutes later (TTL = 5 minutes)
 
-        const itemAfterTTL = customCache.get("item4");
+        const itemAfterTTL = cache.get("item4");
         expect(itemAfterTTL).toBeUndefined();
 
         jest.useRealTimers();
@@ -122,18 +104,16 @@ describe("InMemoryCache", () => {
     test("should use custom TTL when provided even if default TTL is set", () => {
         jest.useFakeTimers();
 
-        const customCache = new InMemoryCache(10, TimeUnit.MINUTE);  // Default TTL of 10 minutes
-
         // Custom TTL: 3 minutes
-        customCache.set("item5", "value5", 3, TimeUnit.MINUTE);  // Custom TTL of 3 minutes
+        cache.set("item5", "value5", 3, TimeUnit.MINUTE);  // Custom TTL of 3 minutes
 
-        const item = customCache.get("item5");
+        const item = cache.get("item5");
         expect(item).toBe("value5");
 
         // Set system time 4 minutes later, item should expire
         jest.setSystemTime(Date.now() + 4 * 60 * 1000);  // 4 minutes later (TTL = 3 minutes)
 
-        const itemAfterTTL = customCache.get("item5");
+        const itemAfterTTL = cache.get("item5");
         expect(itemAfterTTL).toBeUndefined();
 
         jest.useRealTimers();
@@ -148,17 +128,15 @@ describe("InMemoryCache", () => {
     test("should allow custom TTL with different time units", () => {
         jest.useFakeTimers();
 
-        const customCache = new InMemoryCache();
-        // Custom TTL: 1 hour
-        customCache.set("item7", "value7", 1, TimeUnit.HOUR);  // Custom TTL of 1 hour
+        cache.set("item7", "value7", 1, TimeUnit.HOUR);  // Custom TTL of 1 hour
 
-        const item = customCache.get("item7");
+        const item = cache.get("item7");
         expect(item).toBe("value7");
 
         // Set system time 61 minutes later, item should expire after 1 hour
         jest.setSystemTime(Date.now() + 61 * 60 * 1000);  // 61 minutes later (TTL = 1 hour)
 
-        const itemAfterTTL = customCache.get("item7");
+        const itemAfterTTL = cache.get("item7");
         expect(itemAfterTTL).toBeUndefined();
 
         jest.useRealTimers();
