@@ -1,0 +1,26 @@
+{
+  "name": "@npmutils/cache",
+  "version": "1.0.1",
+  "description": "A simple, lightweight library for InMemoryCaching in Node applications",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imonraj27/npmutils_cache.git"
+  },
+  "keywords": [
+    "in-memroy-cache",
+    "utils"
+  ],
+  "author": "Imon Raj",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imonraj27/npmutils_cache/issues"
+  },
+  "homepage": "https://github.com/imonraj27/npmutils_cache#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
